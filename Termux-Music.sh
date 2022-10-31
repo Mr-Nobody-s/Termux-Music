@@ -7,6 +7,7 @@ DIR=`cd $(dirname $0); pwd`
 NOW="$DIR/termuxmusic/now"
 MusicFile="$DIR/termuxmusic/musicpath"
 imge="$DIR/termuxmusic/封面"
+File=$0
 function MainNot(){
     STR=$1
     if [[ $STR = sp ]]
@@ -119,15 +120,15 @@ function NOT(){
         if test ! -f "$imge/$name.jpg";then
             $FFMPEG -loglevel quiet -i "${array[$STR]}" -an -vcodec copy "$imge/$name.jpg"
             if test $? -eq 0;then
-                $BINNOT -t "$name" --priority high -i 23 --ongoing --button1 "上一曲" --button1-action "(bash $DIR/termuxmusic.sh tt lasts)" --button2 "播放/暂停" --button2-action "(bash $DIR/termuxmusic.sh tt sp)" --button3 "下一曲" --button3-action "(bash $DIR/termuxmusic.sh tt lets)" --image-path "$imge/$name.jpg"
+                $BINNOT -t "$name" --priority high -i 23 --ongoing --button1 "上一曲" --button1-action "(bash $File tt lasts)" --button2 "播放/暂停" --button2-action "(bash $File tt sp)" --button3 "下一曲" --button3-action "(bash $File tt lets)" --image-path "$imge/$name.jpg"
                 return
             else
-                $BINNOT -t "$name" --priority high -i 23 --ongoing --button1 "上一曲" --button1-action "(bash $DIR/termuxmusic.sh tt lasts)" --button2 "播放/暂停" --button2-action "(bash $DIR/termuxmusic.sh tt sp)" --button3 "下一曲" --button3-action "(bash $DIR/termuxmusic.sh tt lets)"
+                $BINNOT -t "$name" --priority high -i 23 --ongoing --button1 "上一曲" --button1-action "(bash $File tt lasts)" --button2 "播放/暂停" --button2-action "(bash $File tt sp)" --button3 "下一曲" --button3-action "(bash $File tt lets)"
                 return
             fi
         fi
     else
-     $BINNOT -t "$name" --priority high -i 23 --ongoing --button1 "上一曲" --button1-action "(bash $DIR/termuxmusic.sh tt lasts)" --button2 "播放/暂停" --button2-action "(bash $DIR/termuxmusic.sh tt sp)" --button3 "下一曲" --button3-action "(bash $DIR/termuxmusic.sh tt lets)"
+     $BINNOT -t "$name" --priority high -i 23 --ongoing --button1 "上一曲" --button1-action "(bash $File tt lasts)" --button2 "播放/暂停" --button2-action "(bash $File tt sp)" --button3 "下一曲" --button3-action "(bash $File tt lets)"
         return
     fi
 }
