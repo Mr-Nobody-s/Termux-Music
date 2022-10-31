@@ -105,7 +105,7 @@ function Music(){
     done
 }
 function SingPlay(){
-    if test "$1" = "pause";then echo -e "序列号$num\n播放:${array[$num]}";$BINPATH play;sleept;fi
+    if test "$1" = "pause";then $BINPATH play;sleept;fi
     while :;do
         $BINPATH play "${array[$num]}"
         sleept
