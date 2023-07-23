@@ -27,7 +27,9 @@ function MainNot(){
         num=$(expr $num - 1 );STR=$num;killpid;Music;return
     elif [[ $STR = lets ]]
     then
-        Num;Now;if test $num -ge $len;then num=0;fi;num=$(expr $num + 1 );STR=$num;killpid;Music;return
+        Num;Now
+        if test $num -ge $len;then num=0;fi
+        num=$(expr $num + 1 );STR=$num;killpid;Music;return
     fi
 }
 function Main(){
@@ -120,11 +122,11 @@ function NOT(){
         if test ! -f "$imge/$name.jpg";then
             $FFMPEG -loglevel quiet -i "${array[$STR]}" -an -vcodec copy "$imge/$name.jpg"
             if test $? -eq 0;then
-                $BINNOT -t "$name" --priority high -i 23 --ongoing --button1 "上一曲" --button1-action "(bash $File tt lasts)" --button2 "播放/暂停" --button2-action "(bash $File tt sp)" --button3 "下一曲" --button3-action "(bash $File lets)" --image-path "$imge/$name.jpg"
+                $BINNOT -t "$name" --priority high -i 23 --ongoing --button1 "上一曲" --button1-action "(bash $File tt lasts)" --button2 "播放/暂停" --button2-action "(bash $File tt sp)" --button3 "下一曲" --button3-action "(bash $File tt lets)" --image-path "$imge/$name.jpg"
                 return
             else
                 $BINNOT -t "$name" --priority high -i 23 --ongoing --button1 "上一曲" --button1-action "(bash $File tt lasts)" --button2 "播放/暂停" --button2-action "(bash $File tt sp)" --button3 "下一曲" --button3-action "(bash $File tt lets)"
-                retur
+                return
             fi
         fi
     else
