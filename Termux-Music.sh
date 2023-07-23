@@ -10,7 +10,8 @@ imge="$DIR/termuxmusic/封面"
 File=$0
 function MainNot(){
     STR=$1
-    if [[ $STR = sp ]];then
+    if [[ $STR = sp ]]
+    then
         MusicNow
         now=$?
         if [[ $now -eq 1 || $now -eq 3 ]];then
@@ -18,25 +19,32 @@ function MainNot(){
         else
             $BINPATH pause;killpid;return
         fi
-    elif [[ $STR = lasts ]];then
+    elif [[ $STR = lasts ]]
+    then
         Num;Now
         if test $num -eq 1;then num=$(( $len + 1 ));fi
         if test $num -gt $len;then num=2;fi
         num=$(expr $num - 1 );STR=$num;killpid;Music;return
-    elif [[ $STR = lets ]];then
+    elif [[ $STR = lets ]]
+    then
         Num;Now;if test $num -ge $len;then num=0;fi;num=$(expr $num + 1 );STR=$num;killpid;Music;return
     fi
 }
 function Main(){
-    if [[ $(($STR+1)) != 1 ]];then
+    if [[ $(($STR+1)) != 1 ]]
+    then
         killpid;Now;Music;return
-    elif [[ $STR = n ]];then
+    elif [[ $STR = n ]]
+    then
         changeNot;return
-    elif [[ $STR = s ]];then
+    elif [[ $STR = s ]]
+    then
         MusicNow;now=$?;Num;Now;Music $num pause;return
-    elif [[ $STR = p ]];then
+    elif [[ $STR = p ]]
+    then
         $BINPATH pause;killpid;return
-    elif [[ $STR = c ]];then
+    elif [[ $STR = c ]]
+    then
         Sing;now=$?
         if test $now -eq 33;then
             MusicNow;nows=$?
@@ -57,7 +65,8 @@ function Main(){
                 Num;Now;SingPlay pause;return
             fi
         fi
-    elif [[ $STR = stop ]];then
+    elif [[ $STR = stop ]]
+    then
         $BINPATH stop
         killpid;return
     fi
@@ -111,11 +120,11 @@ function NOT(){
         if test ! -f "$imge/$name.jpg";then
             $FFMPEG -loglevel quiet -i "${array[$STR]}" -an -vcodec copy "$imge/$name.jpg"
             if test $? -eq 0;then
-                $BINNOT -t "$name" --priority high -i 23 --ongoing --button1 "上一曲" --button1-action "(bash $File tt lasts)" --button2 "播放/暂停" --button2-action "(bash $File tt sp)" --button3 "下一曲" --button3-action "(bash $File tt lets)" --image-path "$imge/$name.jpg"
+                $BINNOT -t "$name" --priority high -i 23 --ongoing --button1 "上一曲" --button1-action "(bash $File tt lasts)" --button2 "播放/暂停" --button2-action "(bash $File tt sp)" --button3 "下一曲" --button3-action "(bash $File lets)" --image-path "$imge/$name.jpg"
                 return
             else
                 $BINNOT -t "$name" --priority high -i 23 --ongoing --button1 "上一曲" --button1-action "(bash $File tt lasts)" --button2 "播放/暂停" --button2-action "(bash $File tt sp)" --button3 "下一曲" --button3-action "(bash $File tt lets)"
-                return
+                retur
             fi
         fi
     else
@@ -145,21 +154,26 @@ function Now(){
     fi
 }
 function Single(){
-    if [[ $(sed -n 3p "$NOW") = "单曲循环" ]];then
+    if [[ $(sed -n 3p "$NOW") = "单曲循环" ]]
+    then
         return 55
-    elif [[ $(sed -n 3p "$NOW") = "顺序播放" ]];then
+    elif [[ $(sed -n 3p "$NOW") = "顺序播放" ]]
+    then
         return 44
     fi
 }
 function NotificationStatus(){
-    if [[ $(sed -n 4p "$NOW") = "显示" ]];then
+    if [[ $(sed -n 4p "$NOW") = "显示" ]]
+    then
         return 60
-    elif [[ $(sed -n 4p "$NOW") = "隐藏" ]];then
+    elif [[ $(sed -n 4p "$NOW") = "隐藏" ]]
+    then
         return 70
     fi
 }
 function changeNot(){
-    if test "`sed -n 4p "$NOW"`" = "显示";then
+    if test "`sed -n 4p "$NOW"`" = "显示"
+    then
         sed -i '4c 隐藏' $NOW
         $BINNOTRE 23
     else
@@ -170,16 +184,19 @@ function changeNot(){
 }
 function MusicNow(){
     music=$($BINPATH info)
-    if [[ "$music" = "Status: Paused"* ]];then
+    if [[ "$music" = "Status: Paused"* ]]
+    then
         return 3
-    elif [[ "$music" = "No track currently!" ]];then
+    elif [[ "$music" = "No track currently!" ]]
+    then
         return 1
     else
         return 2
     fi
 }
 function Sing(){
-    if test "`sed -n 3p "$NOW"`" = "单曲循环";then
+    if test "`sed -n 3p "$NOW"`" = "单曲循环"
+    then
         sed -i '3c 顺序播放' $NOW
         return 33
     else
