@@ -9,9 +9,10 @@ function key(){
         clear;Now;printf "%s\n" "${list[@]##*/}"|nl;MusicNow
         read STR
         case $STR in
-        ([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|\))
+        ([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|\))
             if test $STR -le $len;then
                 (nohup bash "$DIR/$FILE" $STR >/dev/null 2>&1 &)
+                #(nohup bash "$DIR/$FILE" $STR)
             fi
             continue
         ;;
@@ -99,7 +100,7 @@ function AddPlayLists(){
         0)
            break;return
         ;;
-        ([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|\))
+        ([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|\))
             lens=${#num[@]}
             Now
             if test $? = 10;then
@@ -145,7 +146,7 @@ function PlayList(){
                 0)
                     break 2;return
                 ;;
-                ([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|\))
+                ([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|\))
                     if test $select -le $playlistlen;then
                         name=$(echo ${playlist[$select]##*/})
                         sed -i '1c '"$name"'' $NOW
@@ -160,14 +161,14 @@ function PlayList(){
                     AddPlayList
                     break
                 ;;
-                (m[1-9]|m[1-9][0-9]|m[1-9][0-9][0-9]|m[1-9][0-9][0-9][0-9]|\))
+                (m[1-9]|m[1-9][0-9]|m[1-9][0-9][0-9]|\))
                     select=$(echo $select|grep -oE '[0-9]+')
                     if test $select -le $playlistlen;then
                         SongListM
                         break
                     else echo "请输入正确的序列号，当前最高$playlistlen，重新输入";continue;fi
                 ;;
-                (d[1-9]|d[1-9][0-9]|d[1-9][0-9][0-9]|d[1-9][0-9][0-9][0-9]|\))
+                (d[1-9]|d[1-9][0-9]|d[1-9][0-9][0-9]|\))
                     select=$(echo $select|grep -oE '[0-9]+')
                     if test $select -le $playlistlen;then
                         if [[ $(echo $DIR/termuxmusic/$(cat $NOW|sed -n 1p)) = ${playlist[$select]} ]];
@@ -287,7 +288,7 @@ function MusicPathOperate(){
          0)
             unset select;unset line;break;return
           ;;
-          ([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|\))
+          ([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|\))
             num=$select
             if [[ $num -le $line ]];then
                 path=$(cat $MusicFile |sed -n "$num"p)
@@ -320,7 +321,7 @@ function DeleteMusicPath(){
         0)
             unset num;break;return
         ;;
-        ([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|\))
+        ([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|\))
             if [[ $num -le $line ]];then
                 if [[ $(echo  `cat $NOW|sed -n 1p`) = $(echo `cat $MusicFile|sed -n "$num"p`) ]];then
                     echo "错误，目录正在使用"
